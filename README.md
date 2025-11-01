@@ -1,27 +1,28 @@
 🧠 Podcast Digest Agent
 
-An AI-powered podcast summarization tool that automatically extracts, transcribes, and summarizes podcast episodes using n8n, Google Gemini, and a React dashboard.
-Users can enter a YouTube or podcast link and receive a concise, well-structured summary via email.
+  An AI-powered podcast summarization tool that automatically extracts, transcribes, and summarizes podcast episodes using n8n, Google Gemini, and a React dashboard.
+  Users can enter a YouTube or podcast link and receive a concise, well-structured summary via email.
 
 🚀 High-Level Overview
 
-Goal: Automate podcast content summarization and email delivery using AI and automation workflows.
+  Goal: Automate podcast content summarization and email delivery using AI and automation workflows.
 
 Key Features:
 
-🎙 AI-driven transcription: Converts podcast or video audio into clean, readable text.
+  🎙 AI-driven transcription: Converts podcast or video audio into clean, readable text.
 
-🧩 Summarization with Gemini: Generates structured summaries and key takeaways.
+  🧩 Summarization with Gemini: Generates structured summaries and key takeaways.
 
-🔗 URL-based automation: Users just paste a YouTube or podcast link or manual transcripts.
+  🔗 URL-based automation: Users just paste a YouTube or podcast link or manual transcripts.
 
-📧 Automated email delivery: The summary is sent directly to the user’s inbox.
+  📧 Automated email delivery: The summary is sent directly to the user’s inbox.
 
-🖥 Interactive React dashboard: Simple, modern UI to input links and track status.
+  🖥 Interactive React dashboard: Simple, modern UI to input links and track status.
 
 🔁 Workflow pipeline: Webhook → Transcriber → Summarizer → Email Formatter → Gmail Send.
 
 🏗 Architecture Diagram
+```text
 +-------------------+        +------------------+        +-----------------+
 |  React Dashboard  | --->   | n8n Webhook Node | --->   | Transcriber     |
 | (User inputs link)|        | (Receives link)  |        | (Audio to text) |
@@ -44,20 +45,21 @@ Key Features:
                                            | Email Designer     |
                                            | + Gmail Send       |
                                            +--------------------+
+```
 
 ⚙ Low-Level Details
 1️⃣ React Frontend
 
-Framework: React + Axios + Framer Motion
+  Framework: React + Axios + Framer Motion
 
-Functionality: Takes YouTube/podcast URL and sends it to the n8n webhook.
+  Functionality: Takes YouTube/podcast URL and sends it to the n8n webhook.
 
-API Call Example:
+  API Call Example:
 
-await axios.post("http://localhost:5678/webhook-test/podcast-digest", {
-  podcastUrl,
-  email,
-});
+  await axios.post("http://localhost:5678/webhook-test/podcast-digest", {
+    podcastUrl,
+    email,
+  });
 
 
 Styling: TailwindCSS + animated transitions
