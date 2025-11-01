@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+🧠 Podcast Digest Agent
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An AI-powered podcast summarization tool that automatically extracts, transcribes, and summarizes podcast episodes using n8n, Google Gemini, and a React dashboard.
+Users can enter a YouTube or podcast link and receive a concise, well-structured summary via email.
 
-## Available Scripts
+🚀 High-Level Overview
 
-In the project directory, you can run:
+Goal: Automate podcast content summarization and email delivery using AI and automation workflows.
 
-### `npm start`
+Key Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🎙 AI-driven transcription: Converts podcast or video audio into clean, readable text.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🧩 Summarization with Gemini: Generates structured summaries and key takeaways.
 
-### `npm test`
+🔗 URL-based automation: Users just paste a YouTube or podcast link or manual transcripts.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+📧 Automated email delivery: The summary is sent directly to the user’s inbox.
 
-### `npm run build`
+🖥 Interactive React dashboard: Simple, modern UI to input links and track status.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔁 Workflow pipeline: Webhook → Transcriber → Summarizer → Email Formatter → Gmail Send.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🏗 Architecture Diagram
++-------------------+        +------------------+        +-----------------+
+|  React Dashboard  | --->   | n8n Webhook Node | --->   | Transcriber     |
+| (User inputs link)|        | (Receives link)  |        | (Audio to text) |
++-------------------+        +------------------+        +-----------------+
+                                                   |
+                                                   v
+                                           +--------------------+
+                                           | Summarizer Agent   |
+                                           | (Gemini AI model)  |
+                                           +--------------------+
+                                                   |
+                                                   v
+                                           +--------------------+
+                                           | Formatter Node     |
+                                           | (Organizes summary)|
+                                           +--------------------+
+                                                   |
+                                                   v
+                                           +--------------------+
+                                           | Email Designer     |
+                                           | + Gmail Send       |
+                                           +--------------------+
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+⚙ Low-Level Details
+1️⃣ React Frontend
 
-### `npm run eject`
+Framework: React + Axios + Framer Motion
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Functionality: Takes YouTube/podcast URL and sends it to the n8n webhook.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+API Call Example:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+await axios.post("http://localhost:5678/webhook-test/podcast-digest", {
+  podcastUrl,
+  email,
+});
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+Styling: TailwindCSS + animated transitions
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Output: Displays real-time statuses — “Processing…”, “Summarizing…”, “Sent ✅”
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2️⃣ n8n Workflow
+Node	Purpose	Key Configurations
+Webhook	Receives input (podcastUrl, email)	POST endpoint
+Transcriber Node	Extracts and transcribes audio from YouTube/podcast	Uses Gemini Audio API or external transcription service
+Summarizer Agent	Summarizes transcript using Gemini	Prompt uses {{ $json.body.transcript }}
+Formatter Node	Cleans and structures the summary into sections	Title, Highlights, Key Takeaways
+Email Designer	Creates a readable email layout	HTML template
+Gmail Send	Sends the summary email	Auth via Gmail credentials
+🔄 Workflow Flow Diagram
 
-### Code Splitting
+Flow:
+User Input → Webhook → Transcriber → Summarizer → Formatter → Email Designer → Gmail Send
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+You can also visualize this flow easily using draw.io or Lucidchart for your documentation.
 
-### Analyzing the Bundle Size
+🧠 Sample Input & Output
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Input:
 
-### Making a Progressive Web App
+{
+  "podcastUrl": "https://www.youtube.com/watch?v=abcd1234",
+  "email": "example@gmail.com"
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+Output (Email):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Subject: Podcast Digest: “How AI is Changing the World”
 
-### Deployment
+Body:
+A short, AI-generated summary highlighting key insights, guest perspectives, and discussion points.
+Includes timestamps and key takeaways formatted for quick reading.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+🧩 Tech Stack
+Layer	Technology
+Frontend	React, Axios, Framer Motion
+Backend Workflow	n8n
+AI Models	Google Gemini
+Transcription	Gemini Audio / Whisper API
+Email Service	Gmail Node in n8n
+💡 Future Improvements
 
-### `npm run build` fails to minify
+🧠 Multi-language transcription
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+📊 Keyword-based indexing
+
+🎯 Personalized digest formatting options
+
+🔄 Direct integration with Spotify & Apple Podcasts APIs
