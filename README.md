@@ -115,3 +115,6 @@ Email Service	Gmail Node in n8n
 🎯 Personalized digest formatting options
 
 🔄 Direct integration with Spotify & Apple Podcasts APIs
+
+PPT:
+https://www.canva.com/design/DAG3cCOfSDU/MIenaEfTi8EfHxh031Djyw/edit?utm_content=DAG3cCOfSDU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
